@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
     <title>Get Your Favorite Gif!</title>
 </head>
+
 <body>
-    
+    <div class="container">
+        <h1>Favorite Video Game!</h1>
+
+        <!-- Rendered buttons go here  -->
+        <div id="buttons-view"></div>
+
+        <form id="game-form">
+            <label for="game-input">Add a Game!</label>
+            <input type="text" id="game-input"><br>
+
+            <!-- Button triggers new game to be added -->
+            <input id="add-game" type="submit" value="submit">
+        </form>
+
+        <!-- Games gif put here -->
+        <div id="games-view"></div>
+    </div>
+
+    <script src="./assets/javascript/giphy.js" ></script>
 </body>
+
 </html>
