@@ -2,45 +2,61 @@
 var topics = ["The Last of Us", "Red Dead Redemption", "Spyro", "Halo", "World of Warcraft", "League of Legends", "Overwatch", "Minecraft", "Mario", "Fortnite"];
 // display the gifs
 function displayGameInfo() {
-
+  
   var game = $(this).attr("data-name");
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topics + "&api_key=WTs6DtQ1Q81c3F76pOWMIG1b0lMMhkcr&limit=10&rating=pg-13";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + game + "&api_key=WTs6DtQ1Q81c3F76pOWMIG1b0lMMhkcr&limit=10&rating=pg-13";
 
   // AJAX call for game
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function (response) {
-      var results = response.data
-      console.log(queryURL);
-      console.log(response);
-      // Get the gifs from the results to the page using for loop
+    var results = response.data
+    console.log(queryURL);
+    console.log(response);
+    // Get the gifs from the results to the page using for loop
 
-      for (var i = 0; i < results.length; i++) {
+    for (var i = 0; i < results.length; i++) {
 
-        // Grab the gif div and display the gifs and ratings
-        $("#games-view").append("<p>Rating: " + results[i].rating + "</p>");
-        $("#games-view").append($("<img class='gamegif' data-state='still'>").attr("src", results[i].images.fixed_height_still));
+      // Grab the gif div and display the gifs and ratings
+      $("#games-view").append("<p>Rating: " + results[i].rating + "</p>");
+      $("#games-view").append($("<img class='gamegif' data-state='still'>").attr({ "src": results[i].images.fixed_height_still.url, "data-still": results[i].images.fixed_height_still.url, "data-animate": results[i].images.fixed_height.url }));
 
-        // Make gif animate when clicked
-        $(".gamegif").on("click", function () {
-          var state = $(this).attr("data-state");
+      // Make gif animate when clicked
+      // $(".gamegif").on("click", function () {
+      //   console.log('clicked')
+      //   var state = $(this).attr("data-state");
 
-          if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-          }
+      //   if (state === "still") {
+      //     $(this).attr("src", $(this).attr("data-animate"));
+      //     $(this).attr("data-state", "animate");
+      //   }
 
-          else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-          }
-        })
+      //   else {
+      //     $(this).attr("src", $(this).attr("data-still"));
+      //     $(this).attr("data-state", "still");
+      //   }
+      // })
+    }
+    
+    $(".gamegif").on("click", function () {
+      console.log('clicked')
+      var state = $(this).attr("data-state");
+
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
       }
-    });
-    // empty every time new button is pressed
-    $("#games-view").empty();
-  
+
+      else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    })
+  });
+  // empty every time new button is pressed
+  $("#games-view").empty();
+
 }
 
 // appends the game buttons to the page
