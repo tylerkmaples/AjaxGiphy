@@ -2,7 +2,7 @@
 var topics = ["The Last of Us", "Red Dead Redemption", "Spyro", "Halo", "World of Warcraft", "League of Legends", "Overwatch", "Minecraft", "Mario", "Fortnite"];
 // display the gifs
 function displayGameInfo() {
-  
+
   var game = $(this).attr("data-name");
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + game + "&api_key=WTs6DtQ1Q81c3F76pOWMIG1b0lMMhkcr&limit=10&rating=pg-13";
 
@@ -19,26 +19,11 @@ function displayGameInfo() {
     for (var i = 0; i < results.length; i++) {
 
       // Grab the gif div and display the gifs and ratings
-      $("#games-view").append("<p>Rating: " + results[i].rating + "</p>");
+      $("games-view").append($("<p>Rating: ") + results[i].rating + ("</p>"));
       $("#games-view").append($("<img class='gamegif' data-state='still'>").attr({ "src": results[i].images.fixed_height_still.url, "data-still": results[i].images.fixed_height_still.url, "data-animate": results[i].images.fixed_height.url }));
-
-      // Make gif animate when clicked
-      // $(".gamegif").on("click", function () {
-      //   console.log('clicked')
-      //   var state = $(this).attr("data-state");
-
-      //   if (state === "still") {
-      //     $(this).attr("src", $(this).attr("data-animate"));
-      //     $(this).attr("data-state", "animate");
-      //   }
-
-      //   else {
-      //     $(this).attr("src", $(this).attr("data-still"));
-      //     $(this).attr("data-state", "still");
-      //   }
-      // })
     }
-    
+
+    // logic to change the state 
     $(".gamegif").on("click", function () {
       console.log('clicked')
       var state = $(this).attr("data-state");
@@ -54,6 +39,7 @@ function displayGameInfo() {
       }
     })
   });
+
   // empty every time new button is pressed
   $("#games-view").empty();
 
@@ -67,7 +53,7 @@ function renderButtons() {
   // Loops through the array of games to generate buttons to the page
   for (var i = 0; i < topics.length; i++) {
 
-    var gameBtn = $("<button>");
+    var gameBtn = $("<button class='btn btn-dark'>");
     gameBtn.addClass("game");
     gameBtn.attr("data-name", topics[i]);
     gameBtn.text(topics[i]);
@@ -82,9 +68,11 @@ $("#add-game").on("click", function (event) {
 
   // grab userinput from the text box and push to array
   var userInput = $("#game-input").val().trim();
+
   topics.push(userInput);
   renderButtons();
   $("#game-input").val('');
+
 });
 
 // allows dynamic buttons to be clickable
